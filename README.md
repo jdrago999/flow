@@ -2,3 +2,46 @@ flow
 ====
 
 Declarative flows for Rails with an emphasis on testability.
+
+Usage
+=====
+
+In your `Gemfile`:
+
+```ruby
+gem 'flow'
+```
+
+In a controller:
+
+```ruby
+class SignupFlow < ApplicationController
+
+  Flow.define name: :signup_flow, path: '/signup', controller: self do |flow|
+    flow.step name: :start, path: '' do |step|
+      step.get :start do
+      end
+      step.post :submit_start do
+        # Do something, then...
+        redirect_to :another_step
+      end
+    end
+    
+    flow.step name: :another_step, path: 'about-you' do |step|
+      step.get :another_step do
+      end
+      step.post :submit_another_step do
+        # Do some stuff, then...
+        redirect_to :finish
+      end
+    end
+    
+    flow.step name: :finish, path: 'thank-you' do |step|
+      step.get :finish do
+      end
+    end
+  end
+
+end
+
+```
