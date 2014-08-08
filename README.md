@@ -19,7 +19,7 @@ class SignupFlow < ApplicationController
 
   Flow.define name: :signup_flow, path: '/signup', controller: self do |flow|
   
-    flow.step name: :start, path: '' do |step|
+    flow.step name: :start, path: '', next_step: :another_step do |step|
       step.get :start do
       end
       
@@ -29,7 +29,7 @@ class SignupFlow < ApplicationController
       end
     end
     
-    flow.step name: :another_step, path: 'about-you' do |step|
+    flow.step name: :another_step, path: 'about-you', next_step: :finish do |step|
       step.get :another_step do
       end
       
